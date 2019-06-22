@@ -1,8 +1,6 @@
 package com.yamasaki.scene;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +15,6 @@ import com.yamasaki.App;
 
 public class Scene extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
-  private final int gridInterval = 100;
   private App app;
 
   public Scene(App app) {
@@ -27,7 +24,7 @@ public class Scene extends JPanel implements ActionListener {
 
   protected void addListeners() {
     MAdapter mouseAdapter;
-    addKeyListener(new TAdapter(this));
+    addKeyListener(new TAdapter());
     mouseAdapter = new MAdapter();
     addMouseListener(mouseAdapter);
     addMouseMotionListener(mouseAdapter);
@@ -47,11 +44,6 @@ public class Scene extends JPanel implements ActionListener {
   }
 
   private class TAdapter extends KeyAdapter {
-    private Scene scene;
-
-    public TAdapter(Scene scene) {
-        this.scene = scene;
-    }
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -66,6 +58,7 @@ public class Scene extends JPanel implements ActionListener {
   }
 
   private class MAdapter extends MouseAdapter {
+
     @Override
     public void mouseClicked(MouseEvent e) {
       super.mouseClicked(e);

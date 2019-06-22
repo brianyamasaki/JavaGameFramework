@@ -12,6 +12,7 @@ public class AppContent extends JPanel {
 
   private static final long serialVersionUID = 1L;
   private Scene[] scenes;
+  private int iScene;
 
   public AppContent(App app) {
     super(new BorderLayout());
@@ -19,8 +20,16 @@ public class AppContent extends JPanel {
     this.scenes = new Scene[2];
     this.scenes[0] = new Intro(app);
     this.scenes[1] = new GameOver(app);
-    this.add(this.scenes[0]);
+    this.iScene = 0;
+    this.add(this.scenes[this.iScene], BorderLayout.CENTER);
+    AppState.setAppContent(this);
+  }
 
+  public void setScene(int iScene) {
+    this.scenes[0].setVisible(false);
+    this.add(this.scenes[iScene], BorderLayout.CENTER);
+    this.iScene = iScene;
+    repaint();
   }
 
   public void menuItemCommand(String part1, String part2) {
