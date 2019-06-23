@@ -4,13 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
 /**
  * Hello world!
  */
-public final class App extends JFrame implements ActionListener {
+public final class App extends JFrame implements ActionListener, KeyListener {
     private static final long serialVersionUID = 1L;
     private static final String appName = "Java Game Engine";
     private static final int initialWidth = 800;
@@ -30,6 +32,7 @@ public final class App extends JFrame implements ActionListener {
         AppState.setAppSize(initialWidth, initialHeight);
         this.appContent = new AppContent(this);
         this.add(this.appContent);
+        this.addKeyListener(this);
 
         // set the window title
         this.setTitle(appName);
@@ -61,6 +64,21 @@ public final class App extends JFrame implements ActionListener {
                     break;
             }
         }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        this.appContent.keyPressed(e);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        this.appContent.keyPressed(e);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
     }
 
     /* Component Adapter

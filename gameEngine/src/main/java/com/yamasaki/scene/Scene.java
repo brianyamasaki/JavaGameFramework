@@ -4,30 +4,20 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
-
-import com.yamasaki.App;
+import javax.swing.Timer;
 
 public class Scene extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
-  private App app;
+  private Timer timer;
+  private static int DELAY = 10;
 
-  public Scene(App app) {
-    this.app = app;
-    this.addListeners();
-  }
-
-  protected void addListeners() {
-    MAdapter mouseAdapter;
-    addKeyListener(new TAdapter());
-    mouseAdapter = new MAdapter();
-    addMouseListener(mouseAdapter);
-    addMouseMotionListener(mouseAdapter);
+  public Scene() {
+    timer = new Timer(DELAY, this);
+    timer.start();
   }
 
   @Override
@@ -43,27 +33,19 @@ public class Scene extends JPanel implements ActionListener {
     repaint();
   }
 
-  private class TAdapter extends KeyAdapter {
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // spaceShip.keyReleased(e);
-        // System.out.println("key released " + KeyEvent.getKeyText(e.getKeyCode()));
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println("key pressed " + KeyEvent.getKeyText(e.getKeyCode()));
-    }
-  }
-
-  private class MAdapter extends MouseAdapter {
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-      super.mouseClicked(e);
-    }
+  public void mouseClicked(MouseEvent e) {
 
   }
 
+  public void mouseMoved(MouseEvent e) {
+    
+  }
+
+  public void keyPressed(KeyEvent e) {
+    
+  }
+
+  public void keyReleased(KeyEvent e) {
+
+  }
 }

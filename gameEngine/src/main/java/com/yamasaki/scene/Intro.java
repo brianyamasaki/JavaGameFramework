@@ -12,18 +12,11 @@ import com.yamasaki.AppState;
 
 public class Intro extends Scene {
   private static final long serialVersionUID = 1L;
-  private App app;
   private Font titleFont;
 
-  public Intro(App app) {
-    super(app);
-    this.app = app;
+  public Intro() {
+    super();
     this.titleFont = new Font("Arial", Font.TRUETYPE_FONT, 30);
-  }
-
-  @Override
-  protected void addListeners() {
-    addMouseListener(new IntroMAdapter());
   }
 
   @Override
@@ -42,13 +35,9 @@ public class Intro extends Scene {
     g2.drawString("Click anywhere to continue", width / 2 - 50, 100);
   }
 
-  private class IntroMAdapter extends MouseAdapter {
-    @Override
-    public void mouseClicked(MouseEvent e) {
-      super.mouseClicked(e);
-      AppState.setSceneIndex(AppState.getSceneIndex()+1);
-    }
-
+  @Override
+  public void mouseClicked(MouseEvent e) {
+    super.mouseClicked(e);
+    AppState.setSceneIndex(AppState.getSceneIndex()+1);    
   }
-
 }

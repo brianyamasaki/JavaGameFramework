@@ -12,8 +12,8 @@ public class GameOver extends Scene {
   private static final long serialVersionUID = 1L;
   private Font titleFont;
 
-  public GameOver(App app) {
-    super(app);
+  public GameOver() {
+    super();
     this.titleFont = new Font("Arial", Font.TRUETYPE_FONT, 30);
   }
 
