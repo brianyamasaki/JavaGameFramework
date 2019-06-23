@@ -1,7 +1,11 @@
 package com.yamasaki.objs;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+
+import com.yamasaki.AppState;
 
 public class Ship {
   private int x;
@@ -25,13 +29,17 @@ public class Ship {
     transform.translate(this.x, this.y);
     transform.rotate(this.angle);
     g2.setTransform(transform);
+		g2.setPaint(Color.white);
+		g2.setStroke(new BasicStroke(5));
     g2.drawPolygon(this.xPoints, this.yPoints, 3);
     g2.setTransform(savedTransform);
   }
 
   public void update() {
-    this.x += Math.round(Math.sin(this.angle) * this.speed);
-    this.y -= Math.round(Math.cos(this.angle) * this.speed);
+    int x = this.x + (int)Math.round(Math.sin(this.angle) * this.speed);
+    int y = this.y - (int)Math.round(Math.cos(this.angle) * this.speed);
+    this.x = Math.min(Math.max(0, x), AppState.getAppWidth());
+    this.y = Math.min(Math.max(0, y), AppState.getAppHeight());
   }
 
   public void turnLeft() {

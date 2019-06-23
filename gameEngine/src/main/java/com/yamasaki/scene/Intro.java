@@ -4,35 +4,34 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 
-import com.yamasaki.App;
 import com.yamasaki.AppState;
 
 public class Intro extends Scene {
   private static final long serialVersionUID = 1L;
-  private Font titleFont;
+  private Image backgroundImage;
+  private final String filename = "gameEngine/assets/intro-screen.jpg";
+  private final int fileWidth = 1600;
+  private final int fileHeight = 1200;
 
   public Intro() {
     super();
-    this.titleFont = new Font("Arial", Font.TRUETYPE_FONT, 30);
+
+    Toolkit toolkit = Toolkit.getDefaultToolkit();
+    this.backgroundImage = toolkit.createImage(filename);
   }
 
   @Override
   protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+
     int width = AppState.getAppWidth();
     int height = AppState.getAppHeight();
-    super.paintComponent(g);
     Graphics2D g2 = (Graphics2D)g;
-    g2.setColor(Color.gray);
-    g2.fillRect(0, 0, width, height);
-    Font oldFont = g2.getFont();
-    g2.setFont(this.titleFont);
-    g2.setColor(Color.BLACK);
-    g2.drawString("Introduction screen", width / 2 - 150, 40);
-    g2.setFont(oldFont);
-    g2.drawString("Click anywhere to continue", width / 2 - 50, 100);
+    g2.drawImage(this.backgroundImage, 0, 0, width, height, 0, 0, fileWidth, fileHeight, this);
   }
 
   @Override
