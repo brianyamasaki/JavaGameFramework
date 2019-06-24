@@ -1,6 +1,5 @@
 package com.yamasaki.scene;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -38,25 +37,34 @@ public class Game extends Scene {
 
   @Override
   public void actionPerformed(ActionEvent e) {
+    for(int keyCode : this.keyList) {
+      this.handleKeyDown(keyCode);
+    }
     ship.update();
     repaint();
   }
 
-  @Override
-  public void keyPressed(KeyEvent e) {
-    super.keyPressed(e);
-    int keyCode = e.getKeyCode();
-    if (keyCode == 37) { // left
-      ship.turnLeft();
-    } else if (keyCode == 39) { // right
-      ship.turnRight();
-    } else if (keyCode == 38) { // up
-      ship.thrust();
-    } else if (keyCode == 40) { // down
-      ship.brake();
+  private void handleKeyDown(int keyCode) {
+    switch(keyCode) {
+      case 37: // left
+      case 65: // A
+        ship.turnLeft();
+        break;
+      case 39: // right
+      case 68: // D
+        ship.turnRight();
+        break;
+      case 38: // up
+      case 87: // W
+        ship.thrust();
+        break;
+      case 40: // down
+      case 83: // S
+        ship.brake();
+        break;
+      default:
+        break;
     }
-    // System.out.println("key pressed " + e.getKeyCode());
-}
-
+  }
 
 }

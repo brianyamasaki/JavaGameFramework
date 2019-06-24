@@ -73,7 +73,7 @@ public final class App extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        this.appContent.keyPressed(e);
+        this.appContent.keyReleased(e);
     }
 
     @Override
