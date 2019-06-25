@@ -4,6 +4,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+
+import com.yamasaki.game_sprites.Projectile;
 
 public class Ship {
   // location on board
@@ -14,6 +17,7 @@ public class Ship {
   private double dy;
   // rotation on plane
   private double angle;
+  private ArrayList<Projectile> shots;
 
   private final double speedMax = 4.0;
   private int[] xPoints = {0, 20, -20 };
@@ -27,6 +31,7 @@ public class Ship {
     // start ship with no motion
     this.dx = 0;
     this.dy = 0;
+    this.shots = new ArrayList<Projectile>();
     
     // intialize Transform
     this.transform = this.createTransform(this.x, this.y, this.angle);
@@ -47,6 +52,7 @@ public class Ship {
 		g2.setStroke(new BasicStroke(5));
     g2.drawPolygon(this.xPoints, this.yPoints, 3);
     g2.setTransform(savedTransform);
+    this.shots.forEach(shot -> shot.draw(g2));
   }
 
   public void update() {
@@ -54,6 +60,11 @@ public class Ship {
     this.x += this.dx;
     this.y -= this.dy;
     this.transform = this.createTransform(this.x, this.y, this.angle);
+
+    for(Projectile shot : this.shots) {
+      shot.update();
+    }
+    this.shots.removeIf((shot) -> !shot.isVisible());
   }
 
   private void changeSpeed(double speed) {
@@ -83,7 +94,7 @@ public class Ship {
     this.changeSpeed(-0.5);
   }
 
-  public void step() {
-
+  public void fire() {
+    this.shots.add(new Projectile(this.x, this.y, this.angle));
   }
 }

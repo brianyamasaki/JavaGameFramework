@@ -67,4 +67,12 @@ public class Game extends Scene {
     }
   }
 
+  @Override
+  public void keyPressed(KeyEvent e) {
+    super.keyPressed(e);
+    if (e.getKeyCode() == 32) {
+      ship.fire();
+    }
+  }
+
 }

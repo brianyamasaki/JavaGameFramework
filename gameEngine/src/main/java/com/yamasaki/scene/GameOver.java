@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import com.yamasaki.App;
 import com.yamasaki.AppState;
 
 public class GameOver extends Scene {
