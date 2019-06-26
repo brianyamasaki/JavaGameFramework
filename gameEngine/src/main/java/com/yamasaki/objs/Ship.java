@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import com.yamasaki.game_sprites.Projectile;
 
+import com.yamasaki.AppState;
+
 public class Ship {
   // location on board
   private int x;
@@ -59,6 +61,20 @@ public class Ship {
     // move and rotate ship
     this.x += this.dx;
     this.y -= this.dy;
+    int appWidth = AppState.getAppWidth();
+    int appHeight = AppState.getAppHeight();
+    if(this.x>appWidth){
+      this.x = 0;
+    }
+    else if(this.x<0){
+      this.x = appWidth;
+    }
+    if(this.y>appHeight){
+      this.y = 0;
+    }
+    else if(this.y<0){
+      this.y = appHeight;
+    }
     this.transform = this.createTransform(this.x, this.y, this.angle);
 
     for(Projectile shot : this.shots) {
