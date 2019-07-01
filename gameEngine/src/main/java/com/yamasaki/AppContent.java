@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 import com.yamasaki.scene.Scene;
+import com.yamasaki.game_sprites.ShipImage;
 import com.yamasaki.scene.Game;
 import com.yamasaki.scene.GameOver;
 import com.yamasaki.scene.Intro;
@@ -22,6 +23,7 @@ public class AppContent extends JPanel {
   public AppContent(App app) {
     super(new BorderLayout());
 
+    AppState.setShipImage(new ShipImage("gameEngine/assets/Ship-Animation.png"));
     this.scenes = new Scene[3];
     this.scenes[0] = new Intro();
     this.scenes[1] = new Game();

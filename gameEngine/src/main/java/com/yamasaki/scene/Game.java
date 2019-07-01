@@ -8,12 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import com.yamasaki.AppState;
+import com.yamasaki.game_sprites.Ship2;
 import com.yamasaki.objs.Ship;
 
 
 public class Game extends Scene {
   private static final long serialVersionUID = 1L;
   private Ship ship;
+  private Ship2 ship2;
   private final String backgroundFilename = "gameEngine/assets/gameBackground.jpg";
   private final int backgroundWidth = 1600;
   private final int backgroundHeight = 1200;
@@ -22,6 +24,7 @@ public class Game extends Scene {
   public Game() {
     super();
     this.ship = new Ship(250, 250, 0.2);
+    this.ship2 = new Ship2(AppState.getShipImage(), 100, 70, 0.3);
     Toolkit toolkit = Toolkit.getDefaultToolkit();
     this.backgroundImage = toolkit.createImage(backgroundFilename);
   }
@@ -32,6 +35,7 @@ public class Game extends Scene {
     Graphics2D g2 = (Graphics2D)g; 
     g2.drawImage(this.backgroundImage, 0, 0, AppState.getAppWidth(), AppState.getAppHeight(), 0, 0, backgroundWidth, backgroundHeight, this);
     this.ship.draw(g2);
+    this.ship2.draw(g2, this);
     Toolkit.getDefaultToolkit().sync();
   }
 
