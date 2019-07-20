@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 public class Projectile extends Sprite {
-  private final double speed = 6;
+  private final double speed = 10;
   private final long msMax = 6000;
   private boolean isVisible;
   private AffineTransform transform;
