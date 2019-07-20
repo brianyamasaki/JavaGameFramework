@@ -20,6 +20,9 @@ public class Ship {
   // rotation on plane
   private double angle;
   private ArrayList<Projectile> shots;
+  // shot delay
+  private long lastShot = 0;
+  private final long shotDelay = 500;
 
   private final double speedMax = 4.0;
   private int[] xPoints = {0, 20, -20 };
@@ -61,6 +64,7 @@ public class Ship {
     // move and rotate ship
     this.x += this.dx;
     this.y -= this.dy;
+
     int appWidth = AppState.getAppWidth();
     int appHeight = AppState.getAppHeight();
     if(this.x>appWidth){
@@ -111,6 +115,10 @@ public class Ship {
   }
 
   public void fire() {
-    this.shots.add(new Projectile(this.x, this.y, this.angle));
+    long time = System.currentTimeMillis();
+    if(time-this.lastShot>=shotDelay){
+      this.shots.add(new Projectile(this.x, this.y, this.angle));
+      lastShot = time;
+    } 
   }
 }
