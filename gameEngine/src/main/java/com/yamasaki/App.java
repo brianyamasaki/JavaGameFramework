@@ -81,7 +81,7 @@ public final class App extends JFrame implements ActionListener, KeyListener {
         
     }
 
-    /* Component Adapter
+    /** Component Adapter
     *  Listen for the messages from the window frame
     */
     private class CAdapter extends ComponentAdapter {

@@ -18,9 +18,22 @@ public class Scene extends JPanel implements ActionListener {
   protected TreeSet<Integer> keyList;
 
   public Scene() {
+    this.keyList = new TreeSet<Integer>();
+  }
+
+  /** called during introduction of game to preload assets
+   * 
+   */
+  public void loadAssets() {
+
+  }
+
+  /**
+   * initialize objects for Scene
+   */
+  public void initialize() {
     timer = new Timer(DELAY, this);
     timer.start();
-    this.keyList = new TreeSet<Integer>();
   }
 
   @Override

@@ -2,14 +2,11 @@ package com.yamasaki;
 
 import java.awt.event.ActionListener;
 
-import com.yamasaki.game_sprites.ShipImage;
-
 public class AppState {
   private ActionListener listener;
   private static int appWidth;
   private static int appHeight;
   private static int iScene;
-  private static ShipImage shipImage;
   private static AppContent appContent;
 
   public AppState(ActionListener listener) {
@@ -36,14 +33,6 @@ public class AppState {
 
   public static AppContent getAppContent() {
     return AppState.appContent;
-  }
-
-  public static void setShipImage(ShipImage shipImage) {
-    AppState.shipImage = shipImage;
-  }
-
-  public static ShipImage getShipImage() {
-    return AppState.shipImage;
   }
 
   public static void setSceneIndex(int i) {
