@@ -15,9 +15,8 @@ public class Intro extends Scene {
   private final int fileWidth = 1600;
   private final int fileHeight = 1200;
 
-  public Intro() {
-    super();
-
+  @Override
+  public void loadAssets() {
     Toolkit toolkit = Toolkit.getDefaultToolkit();
     this.backgroundImage = toolkit.createImage(filename);
   }

@@ -1,9 +1,10 @@
 package com.yamasaki.game_sprites;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.event.ActionListener;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
+
+import javax.swing.JPanel;
 
 public class Sprite {
   protected int x;
@@ -12,7 +13,11 @@ public class Sprite {
   protected double dy;
   protected double theta;
   protected AffineTransform transform;
-  protected Image image;
+  protected SpriteImage spriteImage;
+  protected int frameDelay = 0;
+  protected long timeCreated;
+  protected boolean isAnimation = false;
+
   
   public Sprite(int x, int y, double theta) {
     this.x = x;
@@ -23,6 +28,19 @@ public class Sprite {
     this.transform = this.createTransform(x, y, theta);
   }
 
+  public Sprite(SpriteImage spriteImage, int x, int y, double theta) {
+    this.spriteImage = spriteImage;
+    this.x = x;
+    this.y = y;
+    this.dx = 0;
+    this.dy = 0;
+    this.theta = theta;
+    this.frameDelay = this.spriteImage.getFrameDelay();
+    this.transform = this.createTransform(x, y, theta);
+    this.timeCreated = System.currentTimeMillis();
+    this.isAnimation = this.spriteImage.xImageFrames * this.spriteImage.yImageFrames > 1;
+  }
+
   protected AffineTransform createTransform(int x, int y, double theta) {
     AffineTransform transform = new AffineTransform();
     transform.translate(x, y);
@@ -30,10 +48,47 @@ public class Sprite {
     return transform;
   }
 
-  /* draw function for images - we need the actionListener for images
+  /** returns an integer of which frame in the animation to display - starting from 0
+  * Get modulus of total length of animation, then find the integer dividend to get the frame to display
   */
-  public void draw(Graphics2D g2, ActionListener actionListener) {
-    // draw it
+  protected int chooseFrame() {
+    // casting from long to double is safe because the time difference from timeCreated to current time
+    // is less than 32 bits in milliseconds
+    int timeSinceCreated = (int)(System.currentTimeMillis() - this.timeCreated);
+    
+    return timeSinceCreated % this.spriteImage.getTotalAnimation() / this.spriteImage.getFrameDelay();
+  }
+
+  /** 
+   * draw function for images - we need the actionListener for images
+   */
+  public void draw(Graphics2D g2, JPanel panel) {
+    int width = this.spriteImage.getImageWidth();
+    int height = this.spriteImage.getImageHeight();
+    int halfWidth =  width / 2;
+    int halfHeight = height / 2;
+  
+    AffineTransform transformSave = g2.getTransform();
+    g2.setTransform(this.transform);
+    if (this.isAnimation) {
+      Rectangle rect = this.spriteImage.getFrame(this.chooseFrame(), 0);
+
+      g2.drawImage(
+        this.spriteImage.getImage(), 
+        -halfWidth, 
+        -halfHeight, 
+        width - halfWidth, 
+        height - halfHeight, 
+        rect.x, 
+        rect.y, 
+        rect.x + width, 
+        rect.y + height, 
+        panel);        
+    } else {
+      g2.drawImage(this.spriteImage.getImage(), -halfWidth, -halfHeight, panel);
+    }
+    g2.setTransform(transformSave);
+
   }
 
   /* draw function for anything other than images

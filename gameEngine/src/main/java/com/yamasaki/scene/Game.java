@@ -6,24 +6,43 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferStrategy;
 
 import com.yamasaki.AppState;
+import com.yamasaki.game_sprites.BackgroundStar;
+import com.yamasaki.game_sprites.BackgroundStarImage;
+import com.yamasaki.game_sprites.Ship2;
+import com.yamasaki.game_sprites.ShipImage;
 import com.yamasaki.objs.Ship;
 
 
 public class Game extends Scene {
   private static final long serialVersionUID = 1L;
   private Ship ship;
+  private Ship2 ship2;
   private final String backgroundFilename = "gameEngine/assets/gameBackground.jpg";
   private final int backgroundWidth = 1600;
   private final int backgroundHeight = 1200;
   private Image backgroundImage;
+  private ShipImage shipImage;
+  private BackgroundStarImage backgroundStarImage;
+  private BackgroundStar backgroundStar;
 
-  public Game() {
-    super();
-    this.ship = new Ship(250, 250, 0.2);
+  @Override
+  public void loadAssets() {
+    this.shipImage = new ShipImage("gameEngine/assets/Ship-Animation.png");
+    this.backgroundStarImage = new BackgroundStarImage("gameEngine/assets/star-animation.png");
     Toolkit toolkit = Toolkit.getDefaultToolkit();
     this.backgroundImage = toolkit.createImage(backgroundFilename);
+  }
+
+  @Override
+  public void initialize() {
+    super.initialize();
+    this.ship = new Ship(250, 250, 0.2);
+    this.ship2 = new Ship2(this.shipImage, 100, 70, 0.3);
+    this.backgroundStar = new BackgroundStar(this.backgroundStarImage, 400, 400, 0);
   }
   
   @Override
@@ -31,7 +50,9 @@ public class Game extends Scene {
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D)g; 
     g2.drawImage(this.backgroundImage, 0, 0, AppState.getAppWidth(), AppState.getAppHeight(), 0, 0, backgroundWidth, backgroundHeight, this);
+    this.backgroundStar.draw(g2, this);
     this.ship.draw(g2);
+    this.ship2.draw(g2, this);
     Toolkit.getDefaultToolkit().sync();
   }
 
@@ -73,6 +94,12 @@ public class Game extends Scene {
     if (e.getKeyCode() == 32) {
       ship.fire();
     }
+  }
+
+  @Override
+  public void mouseClicked(MouseEvent e) {
+    // super.mouseClicked(e);
+    AppState.setSceneIndex(AppState.getSceneIndex()+1);
   }
 
 }
