@@ -7,13 +7,15 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferStrategy;
 
 import com.yamasaki.AppState;
 import com.yamasaki.game_sprites.BackgroundStar;
 import com.yamasaki.game_sprites.BackgroundStarImage;
 import com.yamasaki.game_sprites.Ship2;
 import com.yamasaki.game_sprites.ShipImage;
+import com.yamasaki.game_sprites.Sprite;
+import com.yamasaki.game_sprites.VerticalWall;
+import com.yamasaki.game_sprites.VerticalWallImage;
 import com.yamasaki.objs.Ship;
 
 
@@ -27,12 +29,15 @@ public class Game extends Scene {
   private Image backgroundImage;
   private ShipImage shipImage;
   private BackgroundStarImage backgroundStarImage;
-  private BackgroundStar backgroundStar;
+  private VerticalWallImage verticalWallImage;
+  private Sprite[] staticSprites;
+  private Sprite[] dynamicSprites;
 
   @Override
   public void loadAssets() {
     this.shipImage = new ShipImage("gameEngine/assets/Ship-Animation.png");
     this.backgroundStarImage = new BackgroundStarImage("gameEngine/assets/star-animation.png");
+    this.verticalWallImage = new VerticalWallImage("gameEngine/assets/vertical-wall.png");
     Toolkit toolkit = Toolkit.getDefaultToolkit();
     this.backgroundImage = toolkit.createImage(backgroundFilename);
   }
@@ -40,9 +45,12 @@ public class Game extends Scene {
   @Override
   public void initialize() {
     super.initialize();
+    dynamicSprites = new Sprite[1];
+    dynamicSprites[0] = new Ship2(this.shipImage, 100, 70, 0.3);
     this.ship = new Ship(250, 250, 0.2);
-    this.ship2 = new Ship2(this.shipImage, 100, 70, 0.3);
-    this.backgroundStar = new BackgroundStar(this.backgroundStarImage, 400, 400, 0);
+    staticSprites = new Sprite[2];
+    staticSprites[0] = new VerticalWall(this.verticalWallImage, 50, 200, 0);
+    staticSprites[1] = new BackgroundStar(this.backgroundStarImage, 400, 400, 0);
   }
   
   @Override
@@ -50,9 +58,13 @@ public class Game extends Scene {
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D)g; 
     g2.drawImage(this.backgroundImage, 0, 0, AppState.getAppWidth(), AppState.getAppHeight(), 0, 0, backgroundWidth, backgroundHeight, this);
-    this.backgroundStar.draw(g2, this);
+    for (Sprite sprite : this.staticSprites) {
+      sprite.draw(g2, this);
+    }
+    for (Sprite sprite : this.dynamicSprites) {
+      sprite.draw(g2, this);
+    }
     this.ship.draw(g2);
-    this.ship2.draw(g2, this);
     Toolkit.getDefaultToolkit().sync();
   }
 

@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 import com.yamasaki.scene.Scene;
-import com.yamasaki.game_sprites.ShipImage;
 import com.yamasaki.scene.Game;
 import com.yamasaki.scene.GameOver;
 import com.yamasaki.scene.Intro;
