@@ -16,12 +16,9 @@ import com.yamasaki.game_sprites.ShipImage;
 import com.yamasaki.game_sprites.Sprite;
 import com.yamasaki.game_sprites.VerticalWall;
 import com.yamasaki.game_sprites.VerticalWallImage;
-import com.yamasaki.objs.Ship;
-
 
 public class Game extends Scene {
   private static final long serialVersionUID = 1L;
-  private Ship ship;
   private Ship2 ship2;
   private final String backgroundFilename = "gameEngine/assets/gameBackground.jpg";
   private final int backgroundWidth = 1600;
@@ -47,7 +44,6 @@ public class Game extends Scene {
     super.initialize();
     dynamicSprites = new Sprite[1];
     dynamicSprites[0] = new Ship2(this.shipImage, 100, 70, 0.3);
-    this.ship = new Ship(250, 250, 0.2);
     staticSprites = new Sprite[2];
     staticSprites[0] = new VerticalWall(this.verticalWallImage, 50, 200, 0);
     staticSprites[1] = new BackgroundStar(this.backgroundStarImage, 400, 400, 0);
@@ -64,7 +60,6 @@ public class Game extends Scene {
     for (Sprite sprite : this.dynamicSprites) {
       sprite.draw(g2, this);
     }
-    this.ship.draw(g2);
     Toolkit.getDefaultToolkit().sync();
   }
 
@@ -73,7 +68,7 @@ public class Game extends Scene {
     for(int keyCode : this.keyList) {
       this.handleKeyDown(keyCode);
     }
-    ship.update();
+    ship2.update();
     repaint();
   }
 
@@ -81,19 +76,19 @@ public class Game extends Scene {
     switch(keyCode) {
       case 37: // left
       case 65: // A
-        ship.turnLeft();
+        ship2.turnLeft();
         break;
       case 39: // right
       case 68: // D
-        ship.turnRight();
+        ship2.turnRight();
         break;
       case 38: // up
       case 87: // W
-        ship.thrust();
+        ship2.thrust();
         break;
       case 40: // down
       case 83: // S
-        ship.brake();
+        ship2.brake();
         break;
       default:
         break;
@@ -104,7 +99,7 @@ public class Game extends Scene {
   public void keyPressed(KeyEvent e) {
     super.keyPressed(e);
     if (e.getKeyCode() == 32) {
-      ship.fire();
+      ship2.fire();
     }
   }
 

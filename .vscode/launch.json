@@ -2,6 +2,12 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Debug (Launch)",
+      "request": "launch",
+      "mainClass": ""
+    },
+    {
+      "type": "java",
       "name": "CodeLens (Launch) - App",
       "request": "launch",
       "mainClass": "com.yamasaki.App",
