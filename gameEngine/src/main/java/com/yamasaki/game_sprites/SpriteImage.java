@@ -1,9 +1,10 @@
 package com.yamasaki.game_sprites;
 
 import java.awt.Image;
-import java.awt.Polygon;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 public class SpriteImage {
   protected String filename;
@@ -17,7 +18,9 @@ public class SpriteImage {
   protected int msTotalAnimation;
 
   protected boolean hasCollisions;
-  protected Polygon polyCollisions;
+  protected ArrayList<Point> pointsCollisions;
+  protected Rectangle rectCollisions;
+  protected int[] collidesWith;
 
   public SpriteImage(String filename) {
     this.filename = filename;
@@ -32,7 +35,7 @@ public class SpriteImage {
 
     // initialize to not have collision polygon
     this.hasCollisions = false;
-    this.polyCollisions = new Polygon();
+    this.pointsCollisions = new ArrayList<Point>();
     // Sub class must enter width, height and msFrame
     // Sub class must also enter xImageFrames
     // Sub class must enter xImageFrames and yImageFrames

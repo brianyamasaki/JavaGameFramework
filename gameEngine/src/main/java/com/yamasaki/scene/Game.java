@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import com.yamasaki.AppState;
 import com.yamasaki.game_sprites.BackgroundStar;
@@ -27,8 +28,8 @@ public class Game extends Scene {
   private ShipImage shipImage;
   private BackgroundStarImage backgroundStarImage;
   private VerticalWallImage verticalWallImage;
-  private Sprite[] staticSprites;
-  private Sprite[] dynamicSprites;
+  private ArrayList<Sprite> staticSprites;
+  private ArrayList<Sprite> dynamicSprites;
 
   @Override
   public void loadAssets() {
@@ -43,11 +44,13 @@ public class Game extends Scene {
   public void initialize() {
     super.initialize();
     this.playerObject = new Ship2(this.shipImage, 100, 70, 0.3);
-    dynamicSprites = new Sprite[1];
-    dynamicSprites[0] = this.playerObject;
-    staticSprites = new Sprite[2];
-    staticSprites[0] = new VerticalWall(this.verticalWallImage, 50, 200, 0);
-    staticSprites[1] = new BackgroundStar(this.backgroundStarImage, 400, 400, 0);
+    staticSprites = new ArrayList<Sprite>();
+    staticSprites.add(new VerticalWall(this.verticalWallImage, 50, 200, 0));
+    staticSprites.add(new BackgroundStar(this.backgroundStarImage, 400, 400, 0));
+    AppState.addToSpriteList(this.staticSprites);
+    dynamicSprites = new ArrayList<Sprite>();
+    dynamicSprites.add(this.playerObject);
+    AppState.addToSpriteList(this.dynamicSprites);
   }
   
   @Override
@@ -69,7 +72,21 @@ public class Game extends Scene {
     for(int keyCode : this.keyList) {
       this.handleKeyDown(keyCode);
     }
-    this.playerObject.update();
+
+    // update positions
+    for(Sprite sprite : this.dynamicSprites) {
+      sprite.update();
+    }
+
+    // check collisions
+    for(Sprite sprite : this.dynamicSprites) {
+      sprite.collisionDetect();
+    }
+
+    // remove if marked for removal
+    this.dynamicSprites.removeIf((sprite) -> sprite.toRemove());
+
+    // redraw the screen
     repaint();
   }
 

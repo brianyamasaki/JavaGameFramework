@@ -3,6 +3,9 @@ package com.yamasaki;
 import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+
+import com.yamasaki.game_sprites.Sprite;
 
 public class AppState {
   private static int appWidth;
@@ -10,6 +13,7 @@ public class AppState {
   private static int iScene;
   private static AppContent appContent;
   private static AffineTransform initialTransform;
+  private static ArrayList<ArrayList<Sprite>> spriteLists;
 
   public AppState(ActionListener listener) {
     AppState.iScene = 0;
@@ -58,5 +62,21 @@ public class AppState {
    */
   public static AffineTransform getInitialTransform() {
     return AppState.initialTransform;
+  }
+
+  public static void addToSpriteList(ArrayList<Sprite> spriteList) {
+    AppState.spriteLists.add(spriteList);
+  }
+
+  public static ArrayList<Sprite> getSpriteList(int i) {
+    return AppState.spriteLists.get(i);
+  }
+
+  public static void addDynamicSprite(Sprite sprite) {
+    AppState.spriteLists.get(1).add(sprite);
+  }
+
+  public static void clearSpriteLists() {
+    AppState.spriteLists = new ArrayList<ArrayList<Sprite>>();
   }
 }
