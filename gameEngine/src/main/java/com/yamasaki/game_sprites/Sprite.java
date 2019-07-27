@@ -1,12 +1,15 @@
 package com.yamasaki.game_sprites;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
 
 import javax.swing.JPanel;
+
+import com.yamasaki.AppState;
 
 public class Sprite {
   protected int x;
@@ -61,7 +64,7 @@ public class Sprite {
   }
 
   protected AffineTransform createTransform(int x, int y, double theta) {
-    AffineTransform transform = new AffineTransform();
+    AffineTransform transform = new AffineTransform(AppState.getInitialTransform());
     transform.translate(x, y);
     transform.rotate(theta, 0, 0);
     return transform;
@@ -79,6 +82,15 @@ public class Sprite {
       polyTransformed.addPoint((int)Math.round(coords[0]), (int)Math.round(coords[1]));
     }
     return polyTransformed;
+  }
+
+  protected Point transformPoint(int x, int y) {
+    double[] src = new double[2];
+    double[] dst = new double[2];
+    src[0] = x;
+    src[1] = y;
+    this.transform.transform(src, 0, dst, 0, 1);
+    return new Point((int) dst[0], (int) dst[1]);
   }
 
   /** returns an integer of which frame in the animation to display - starting from 0

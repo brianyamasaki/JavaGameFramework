@@ -19,7 +19,7 @@ import com.yamasaki.game_sprites.VerticalWallImage;
 
 public class Game extends Scene {
   private static final long serialVersionUID = 1L;
-  private Ship2 ship2;
+  private Ship2 playerObject;
   private final String backgroundFilename = "gameEngine/assets/gameBackground.jpg";
   private final int backgroundWidth = 1600;
   private final int backgroundHeight = 1200;
@@ -42,8 +42,9 @@ public class Game extends Scene {
   @Override
   public void initialize() {
     super.initialize();
+    this.playerObject = new Ship2(this.shipImage, 100, 70, 0.3);
     dynamicSprites = new Sprite[1];
-    dynamicSprites[0] = new Ship2(this.shipImage, 100, 70, 0.3);
+    dynamicSprites[0] = this.playerObject;
     staticSprites = new Sprite[2];
     staticSprites[0] = new VerticalWall(this.verticalWallImage, 50, 200, 0);
     staticSprites[1] = new BackgroundStar(this.backgroundStarImage, 400, 400, 0);
@@ -68,7 +69,7 @@ public class Game extends Scene {
     for(int keyCode : this.keyList) {
       this.handleKeyDown(keyCode);
     }
-    ship2.update();
+    this.playerObject.update();
     repaint();
   }
 
@@ -76,19 +77,19 @@ public class Game extends Scene {
     switch(keyCode) {
       case 37: // left
       case 65: // A
-        ship2.turnLeft();
+        this.playerObject.turnLeft();
         break;
       case 39: // right
       case 68: // D
-        ship2.turnRight();
+        this.playerObject.turnRight();
         break;
       case 38: // up
       case 87: // W
-        ship2.thrust();
+        this.playerObject.thrust();
         break;
       case 40: // down
       case 83: // S
-        ship2.brake();
+        this.playerObject.brake();
         break;
       default:
         break;
@@ -99,7 +100,7 @@ public class Game extends Scene {
   public void keyPressed(KeyEvent e) {
     super.keyPressed(e);
     if (e.getKeyCode() == 32) {
-      ship2.fire();
+      this.playerObject.fire();
     }
   }
 

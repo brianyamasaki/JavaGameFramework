@@ -1,16 +1,17 @@
 package com.yamasaki;
 
+import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 
 public class AppState {
-  private ActionListener listener;
   private static int appWidth;
   private static int appHeight;
   private static int iScene;
   private static AppContent appContent;
+  private static AffineTransform initialTransform;
 
   public AppState(ActionListener listener) {
-    this.listener = listener;
     AppState.iScene = 0;
   }
 
@@ -42,5 +43,20 @@ public class AppState {
 
   public static int getSceneIndex() {
     return AppState.iScene;
+  }
+  /**
+   * Store initial transform to detect screen scaling by some windowing environments
+   * Windows will double the screen size by pixels on high res devices and this is the way we know
+   * @param g2
+   */
+  public static void setInitialTransform(Graphics2D g2) {
+    AppState.initialTransform = g2.getTransform();
+  }
+  /**
+   * get the initial transform to detect screen scaling
+   * @return
+   */
+  public static AffineTransform getInitialTransform() {
+    return AppState.initialTransform;
   }
 }

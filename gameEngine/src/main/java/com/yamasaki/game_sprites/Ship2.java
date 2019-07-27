@@ -1,4 +1,5 @@
 package com.yamasaki.game_sprites;
+import java.awt.Point;
 import java.awt.Graphics2D;
 import java.awt.Panel;
 import java.util.ArrayList;
@@ -19,13 +20,15 @@ public class Ship2 extends Sprite {
   }
   
   public void update() {
+    int appWidth = AppState.getAppWidth();
+    int appHeight = AppState.getAppHeight();
+
     // move and rotate ship
     this.x += this.dx;
     this.y -= this.dy;
 
-    int appWidth = AppState.getAppWidth();
-    int appHeight = AppState.getAppHeight();
-    if(this.x>appWidth){
+    Point pt = this.transformPoint(appWidth, appHeight);
+    if(this.x > appWidth){
       this.x = 0;
     }
     else if(this.x<0){
