@@ -7,14 +7,12 @@ import java.awt.geom.AffineTransform;
 public class Projectile extends Sprite {
   private final double speed = 10;
   private final long msMax = 6000;
-  private boolean isVisible;
   private AffineTransform transform;
   private long msTime;
 
   public Projectile(int x, int y, double theta) {
     super(x, y, theta);
     this.calcSpeed();
-    this.isVisible = true;
     this.transform = this.createTransform(x, y, theta);
     this.msTime = System.currentTimeMillis();
   }
@@ -46,12 +44,7 @@ public class Projectile extends Sprite {
     this.y -= (int) Math.round(this.dy);
     this.transform = this.createTransform(x, y, theta);
     if (System.currentTimeMillis() - this.msTime > this.msMax) {
-      this.isVisible = false;
+      this.toRemove = true;
     }
   }
-
-  public boolean isVisible() {
-    return this.isVisible;
-  }
-
 }

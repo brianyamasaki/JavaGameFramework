@@ -1,16 +1,21 @@
 package com.yamasaki;
 
+import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+
+import com.yamasaki.game_sprites.Sprite;
 
 public class AppState {
-  private ActionListener listener;
   private static int appWidth;
   private static int appHeight;
   private static int iScene;
   private static AppContent appContent;
+  private static AffineTransform initialTransform;
+  private static ArrayList<ArrayList<Sprite>> spriteLists;
 
   public AppState(ActionListener listener) {
-    this.listener = listener;
     AppState.iScene = 0;
   }
 
@@ -42,5 +47,36 @@ public class AppState {
 
   public static int getSceneIndex() {
     return AppState.iScene;
+  }
+  /**
+   * Store initial transform to detect screen scaling by some windowing environments
+   * Windows will double the screen size by pixels on high res devices and this is the way we know
+   * @param g2
+   */
+  public static void setInitialTransform(Graphics2D g2) {
+    AppState.initialTransform = g2.getTransform();
+  }
+  /**
+   * get the initial transform to detect screen scaling
+   * @return
+   */
+  public static AffineTransform getInitialTransform() {
+    return AppState.initialTransform;
+  }
+
+  public static void addToSpriteList(ArrayList<Sprite> spriteList) {
+    AppState.spriteLists.add(spriteList);
+  }
+
+  public static ArrayList<Sprite> getSpriteList(int i) {
+    return AppState.spriteLists.get(i);
+  }
+
+  public static void addDynamicSprite(Sprite sprite) {
+    AppState.spriteLists.get(1).add(sprite);
+  }
+
+  public static void clearSpriteLists() {
+    AppState.spriteLists = new ArrayList<ArrayList<Sprite>>();
   }
 }
