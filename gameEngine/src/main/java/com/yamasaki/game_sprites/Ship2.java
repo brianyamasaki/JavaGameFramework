@@ -2,6 +2,10 @@ package com.yamasaki.game_sprites;
 
 import com.yamasaki.AppState;
 
+import java.awt.Point;
+import java.awt.Polygon;
+import java.util.ArrayList;
+
 public class Ship2 extends Sprite {
   private final double speedMax = 4.0;
   private long lastShot = 0;
@@ -16,11 +20,15 @@ public class Ship2 extends Sprite {
    */
   public void update() {
     super.update();
+
     int appWidth = AppState.getAppWidth();
     int appHeight = AppState.getAppHeight();
+    this.pointsCollisionsInGame = this.transformPoints(this.pointsCollisions);
+    this.rectBoundsInGame = this.boundingRectangle(this.pointsCollisionsInGame);
 
     // move and rotate ship
     this.x += this.dx;
+    this.y -= this.dy;
     this.y -= this.dy;
 
     if(this.x > appWidth){
@@ -42,6 +50,28 @@ public class Ship2 extends Sprite {
   @Override
   public void collisionDetect() {
     super.collisionDetect();
+    ArrayList<Sprite> staticSprites = AppState.getSpriteList(0);
+
+    // iterate through staticSprites
+    for (Sprite sprite : staticSprites) {
+      // check if sprite has Collisions, then check if rectangles intersect, then check polygon points
+      if (sprite.hasCollisions && this.rectBoundsInGame.intersects(sprite.rectBoundsInGame)) {
+        Polygon poly = new Polygon();
+        for (Point pt : sprite.pointsCollisionsInGame) {
+          poly.addPoint(pt.x, pt.y);
+        }
+        for (Point pt : this.pointsCollisionsInGame) {
+          if (poly.contains(pt)) {
+            this.receiveDamage();
+          }
+        }
+      }
+    }
+  }
+  
+  private void receiveDamage() {
+    this.toRemove = true;
+    AppState.setSceneIndex(AppState.getSceneIndex()+1);
   }
 
   private void changeSpeed(double speed) {

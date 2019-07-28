@@ -103,7 +103,7 @@ public class Sprite {
       src[i++] = pt.x;
       src[i++] = pt.y;
     }
-    this.transform.transform(src, 0, dst, 0, 2);
+    this.transform.transform(src, 0, dst, 0, points.size());
     for (i = 0; i < arraySize; ) {
       newPoints.add(new Point((int)Math.round(dst[i++]), (int)Math.round(dst[i++])));
     }
@@ -116,11 +116,13 @@ public class Sprite {
     xMin = xMax = pt.x;
     yMin = yMax = pt.y;
     for(int i = 1; i < points.size(); i++) {
+      pt = points.get(i);
       if (pt.x < xMin) {
         xMin = pt.x;
       } else if (pt.x > xMax) {
         xMax = pt.x;
-      } else if (pt.y < yMin) {
+      } 
+      if (pt.y < yMin) {
         yMin = pt.y;
       } else if (pt.y > yMax) {
         yMax = pt.y;
@@ -187,7 +189,7 @@ public class Sprite {
    * Not used if unmoving
    */
   public void update() {
-    
+  
   }
 
   /**

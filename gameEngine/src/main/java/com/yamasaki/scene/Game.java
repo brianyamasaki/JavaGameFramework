@@ -45,7 +45,7 @@ public class Game extends Scene {
     super.initialize();
     this.playerObject = new Ship2(this.shipImage, 100, 70, 0.3);
     staticSprites = new ArrayList<Sprite>();
-    staticSprites.add(new VerticalWall(this.verticalWallImage, 50, 200, 0));
+    staticSprites.add(new VerticalWall(this.verticalWallImage, 10, 80, 0));
     staticSprites.add(new BackgroundStar(this.backgroundStarImage, 400, 400, 0));
     AppState.addToSpriteList(this.staticSprites);
     dynamicSprites = new ArrayList<Sprite>();
@@ -106,7 +106,7 @@ public class Game extends Scene {
         break;
       case 40: // down
       case 83: // S
-        this.playerObject.brake();
+        // this.playerObject.brake();
         break;
       default:
         break;
@@ -124,7 +124,6 @@ public class Game extends Scene {
   @Override
   public void mouseClicked(MouseEvent e) {
     // super.mouseClicked(e);
-    AppState.setSceneIndex(AppState.getSceneIndex()+1);
   }
 
 }
