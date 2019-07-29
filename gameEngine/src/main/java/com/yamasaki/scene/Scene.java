@@ -11,6 +11,8 @@ import java.util.TreeSet;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import com.yamasaki.AppState;
+
 public class Scene extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
   private Timer timer;
@@ -32,8 +34,10 @@ public class Scene extends JPanel implements ActionListener {
    * initialize objects for Scene
    */
   public void initialize() {
+    // Timer that schedules screen redraws for videogame frames
     timer = new Timer(DELAY, this);
     timer.start();
+    AppState.clearSpriteLists();
   }
 
   @Override
