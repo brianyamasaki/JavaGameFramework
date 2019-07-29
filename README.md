@@ -1,4 +1,4 @@
-# Java Drawing App
+# Java Game Framework
 
 This is a basic Java game application using the Swing framework, using Java SE 7 and later. 
 
@@ -12,5 +12,5 @@ The code _may_ run as written on other Java IDEs, but that hasn't been tested an
 
 ## Created with the Maven Archetype extension
 
-Created by the Maven extension for Visual Studio Code to create the project. Use the VSCode Command palette and run Maven: Execute commands to do various things, including automatically creating JARs.
+Created by the Maven extension for Visual Studio Code to create the project. Use the VSCode Command palette and run Maven: Execute commands to do various things, including automatically creating JARs (though I haven't figured out how to configure this correctly for JAR creation).
 
