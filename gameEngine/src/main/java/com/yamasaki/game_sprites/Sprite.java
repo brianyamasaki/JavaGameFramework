@@ -3,6 +3,7 @@ package com.yamasaki.game_sprites;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
@@ -189,16 +190,44 @@ public class Sprite {
    * Not used if unmoving
    */
   public void update() {
-  
+
+    if (this.pointsCollisions != null) {
+      this.pointsCollisionsInGame = this.transformPoints(this.pointsCollisions);
+      this.rectBoundsInGame = this.boundingRectangle(this.pointsCollisionsInGame);  
+    }
   }
 
   /**
-   * Detects collisions
+   * Called during the Collision Detection phase 
    */
   public void collisionDetect() {
-
+    
+  }
+  /**
+   * called to see if this sprite has collided with otherSprite
+   * naive implementation for collision detection
+   * @return boolean
+   */
+  protected boolean hasCollidedWith(Sprite otherSprite) {
+    // first check if bounding rectangles intersect, then check if polygon points are inside given otherSprite
+    if (otherSprite.hasCollisions && this.rectBoundsInGame.intersects(otherSprite.rectBoundsInGame)) {
+      Polygon poly = new Polygon();
+      for (Point pt : otherSprite.pointsCollisionsInGame) {
+        poly.addPoint(pt.x, pt.y);
+      }
+      for (Point pt : this.pointsCollisionsInGame) {
+        if (poly.contains(pt)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
+  /**
+   * Called by game to remove objects from game
+   * @return
+   */
   public boolean toRemove() {
     return this.toRemove;
   }
