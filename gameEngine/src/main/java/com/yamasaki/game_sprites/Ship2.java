@@ -23,8 +23,6 @@ public class Ship2 extends Sprite {
 
     int appWidth = AppState.getAppWidth();
     int appHeight = AppState.getAppHeight();
-    this.pointsCollisionsInGame = this.transformPoints(this.pointsCollisions);
-    this.rectBoundsInGame = this.boundingRectangle(this.pointsCollisionsInGame);
 
     // move and rotate ship
     this.x += this.dx;
@@ -54,18 +52,8 @@ public class Ship2 extends Sprite {
 
     // iterate through staticSprites
     for (Sprite sprite : staticSprites) {
-      // check if sprite has Collisions, then check if rectangles intersect, then check polygon points
-      if (sprite.hasCollisions && this.rectBoundsInGame.intersects(sprite.rectBoundsInGame)) {
-        Polygon poly = new Polygon();
-        for (Point pt : sprite.pointsCollisionsInGame) {
-          poly.addPoint(pt.x, pt.y);
-        }
-        for (Point pt : this.pointsCollisionsInGame) {
-          if (poly.contains(pt)) {
-            this.receiveDamage();
-          }
-        }
-      }
+      if (this.hasCollidedWith(sprite))
+        this.receiveDamage();
     }
   }
   
