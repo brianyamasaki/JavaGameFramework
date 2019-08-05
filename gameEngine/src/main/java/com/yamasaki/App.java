@@ -15,8 +15,8 @@ import javax.swing.JFrame;
 public final class App extends JFrame implements ActionListener, KeyListener {
     private static final long serialVersionUID = 1L;
     private static final String appName = "Java Game Engine";
-    private static final int initialWidth = 800;
-    private static final int initialHeight = 600;
+    private static final int initialWidth = 1600;
+    private static final int initialHeight = 1200;
     private AppState appState;
     private AppContent appContent;
 
