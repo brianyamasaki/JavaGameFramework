@@ -1,6 +1,7 @@
 package com.yamasaki.game_sprites;
 
 import com.yamasaki.AppState;
+import com.yamasaki.sound.GameSounds;
 
 import java.awt.Point;
 import java.awt.Polygon;
@@ -10,7 +11,8 @@ public class Ship2 extends Sprite {
   private final double speedMax = 4.0;
   private long lastShot = 0;
   private final long shotDelay = 500;
-
+  GameSounds gameSounds = new GameSounds();
+  
   public Ship2(SpriteImage spriteImage, int x, int y, double theta) {
     super(spriteImage, x, y, theta);
   }
@@ -94,6 +96,7 @@ public class Ship2 extends Sprite {
     if(time-this.lastShot>=shotDelay){
       AppState.addDynamicSprite(new Projectile(this.x, this.y, this.theta));
       lastShot = time;
+      gameSounds.playLaser2Sounds();
     } 
   }
 }

@@ -30,6 +30,7 @@ public class Game extends Scene {
   private VerticalWallImage verticalWallImage;
   private ArrayList<Sprite> staticSprites;
   private ArrayList<Sprite> dynamicSprites;
+  private boolean thrustSound = true;
 
   @Override
   public void loadAssets() {
