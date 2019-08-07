@@ -18,6 +18,7 @@ public class Scene extends JPanel implements ActionListener {
   private Timer timer;
   private static int DELAY = 10;
   protected TreeSet<Integer> keyList;
+  protected long timeToDie = 0;
 
   public Scene() {
     this.keyList = new TreeSet<Integer>();
@@ -38,6 +39,10 @@ public class Scene extends JPanel implements ActionListener {
     timer = new Timer(DELAY, this);
     timer.start();
     AppState.clearSpriteLists();
+  }
+
+  public void setTimeToDie(long timeToDie) {
+    this.timeToDie = timeToDie;
   }
 
   @Override

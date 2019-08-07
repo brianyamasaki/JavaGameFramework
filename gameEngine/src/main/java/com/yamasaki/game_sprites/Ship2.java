@@ -2,9 +2,8 @@ package com.yamasaki.game_sprites;
 
 import com.yamasaki.AppState;
 import com.yamasaki.sound.GameSounds;
+import com.yamasaki.scene.Game;
 
-import java.awt.Point;
-import java.awt.Polygon;
 import java.util.ArrayList;
 
 public class Ship2 extends Sprite {
@@ -20,8 +19,9 @@ public class Ship2 extends Sprite {
   /**
    * Update position and rotation
    */
-  public void update() {
-    super.update();
+  @Override
+  public void update(long timeNow) {
+    super.update(timeNow);
 
     int appWidth = AppState.getAppWidth();
     int appHeight = AppState.getAppHeight();
@@ -48,20 +48,22 @@ public class Ship2 extends Sprite {
   }
 
   @Override
-  public void collisionDetect() {
-    super.collisionDetect();
+  public void collisionDetect(long timeNow) {
+    super.collisionDetect(timeNow);
     ArrayList<Sprite> staticSprites = AppState.getSpriteList(0);
 
     // iterate through staticSprites
     for (Sprite sprite : staticSprites) {
       if (this.hasCollidedWith(sprite))
-        this.receiveDamage();
+        this.receiveDamage(timeNow);
     }
   }
   
-  private void receiveDamage() {
+  private void receiveDamage(long timeNow) {
+    Game game = (Game) AppState.getAppContent().getCurrentScene();
     this.toRemove = true;
-    AppState.setSceneIndex(AppState.getSceneIndex()+1);
+    AppState.addDynamicSprite(new Explosion(game.getExplosionImage(), this.x, this.y, this.theta));
+    game.setTimeToDie(timeNow + 1000);
   }
 
   private void changeSpeed(double speed) {

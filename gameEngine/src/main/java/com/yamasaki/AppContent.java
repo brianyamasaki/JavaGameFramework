@@ -63,6 +63,10 @@ public class AppContent extends JPanel {
     repaint();
   }
 
+  public Scene getCurrentScene() {
+    return this.currentScene;
+  }
+
   public void menuItemCommand(String part1, String part2) {
     // this.board.menuItemCommand(part2);
   }

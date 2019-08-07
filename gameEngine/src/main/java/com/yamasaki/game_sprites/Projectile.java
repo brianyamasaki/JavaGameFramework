@@ -38,12 +38,12 @@ public class Projectile extends Sprite {
   }
 
   @Override
-  public void update() {
-    super.update();
+  public void update(long timeNow) {
+    super.update(timeNow);
     this.x += (int) Math.round(this.dx);
     this.y -= (int) Math.round(this.dy);
     this.transform = this.createTransform(x, y, theta);
-    if (System.currentTimeMillis() - this.msTime > this.msMax) {
+    if (timeNow - this.msTime > this.msMax) {
       this.toRemove = true;
     }
   }

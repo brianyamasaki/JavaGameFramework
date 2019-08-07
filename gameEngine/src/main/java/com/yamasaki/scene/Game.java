@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.yamasaki.AppState;
 import com.yamasaki.game_sprites.BackgroundStar;
 import com.yamasaki.game_sprites.BackgroundStarImage;
+import com.yamasaki.game_sprites.ExplosionImage;
 import com.yamasaki.game_sprites.Ship2;
 import com.yamasaki.game_sprites.ShipImage;
 import com.yamasaki.game_sprites.Sprite;
@@ -22,15 +23,17 @@ public class Game extends Scene {
   private static final long serialVersionUID = 1L;
   private Ship2 playerObject;
   private final String backgroundFilename = "gameEngine/assets/gameBackground.jpg";
+  private final String explosionFilename = "gameEngine/assets/images/explosion.png";
   private final int backgroundWidth = 1600;
   private final int backgroundHeight = 1200;
   private Image backgroundImage;
   private ShipImage shipImage;
   private BackgroundStarImage backgroundStarImage;
   private VerticalWallImage verticalWallImage;
+  private ExplosionImage explosionImage;
   private ArrayList<Sprite> staticSprites;
   private ArrayList<Sprite> dynamicSprites;
-  private boolean thrustSound = true;
+  private ArrayList<Sprite> addedDynamicSprites;
 
   @Override
   public void loadAssets() {
@@ -39,6 +42,7 @@ public class Game extends Scene {
     this.verticalWallImage = new VerticalWallImage("gameEngine/assets/vertical-wall.png");
     Toolkit toolkit = Toolkit.getDefaultToolkit();
     this.backgroundImage = toolkit.createImage(backgroundFilename);
+    this.explosionImage = new ExplosionImage(explosionFilename);
   }
 
   @Override
@@ -52,6 +56,8 @@ public class Game extends Scene {
     dynamicSprites = new ArrayList<Sprite>();
     dynamicSprites.add(this.playerObject);
     AppState.addToSpriteList(this.dynamicSprites);
+    this.addedDynamicSprites = new ArrayList<Sprite>();
+    AppState.addToSpriteList(this.addedDynamicSprites);
   }
   
   @Override
@@ -70,18 +76,30 @@ public class Game extends Scene {
 
   @Override
   public void actionPerformed(ActionEvent e) {
+    long timeNow = System.currentTimeMillis();
+
+    if (this.timeToDie > 0 && this.timeToDie < timeNow) {
+      AppState.setSceneIndex(AppState.getSceneIndex()+1);
+      this.timeToDie = 0;
+    }
     for(int keyCode : this.keyList) {
       this.handleKeyDown(keyCode);
     }
 
     // update positions
     for(Sprite sprite : this.dynamicSprites) {
-      sprite.update();
+      sprite.update(timeNow);
     }
 
     // check collisions
     for(Sprite sprite : this.dynamicSprites) {
-      sprite.collisionDetect();
+      sprite.collisionDetect(timeNow);
+    }
+
+    // add new Sprites
+    if (this.addedDynamicSprites.size() > 0) {
+      this.dynamicSprites.addAll(this.addedDynamicSprites);
+      this.addedDynamicSprites = new ArrayList<Sprite>();  
     }
 
     // remove if marked for removal
@@ -125,6 +143,10 @@ public class Game extends Scene {
   @Override
   public void mouseClicked(MouseEvent e) {
     // super.mouseClicked(e);
+  }
+
+  public ExplosionImage getExplosionImage() {
+    return this.explosionImage;
   }
 
 }

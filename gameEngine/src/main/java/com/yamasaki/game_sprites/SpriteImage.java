@@ -11,6 +11,7 @@ public class SpriteImage {
   protected Image image;
   protected int xImageFrames;
   protected int yImageFrames;
+  protected int lifetimeInMilliseconds;
 
   protected int width;
   protected int height;
@@ -32,6 +33,7 @@ public class SpriteImage {
     this.yImageFrames = 1;
     this.msFrameDelay = 0;
     this.msTotalAnimation = 0;
+    this.lifetimeInMilliseconds = 0;
 
     // initialize to not have collision polygon
     this.hasCollisions = false;

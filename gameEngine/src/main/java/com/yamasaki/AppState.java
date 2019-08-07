@@ -73,7 +73,7 @@ public class AppState {
   }
 
   public static void addDynamicSprite(Sprite sprite) {
-    AppState.spriteLists.get(1).add(sprite);
+    AppState.spriteLists.get(2).add(sprite);
   }
 
   public static void clearSpriteLists() {

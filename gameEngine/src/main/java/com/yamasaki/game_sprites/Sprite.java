@@ -27,6 +27,7 @@ public class Sprite {
   protected int[] collidesWith;
   protected ArrayList<Point> pointsCollisionsInGame;
   protected Rectangle rectBoundsInGame;
+  protected long timeToDie;
   protected boolean toRemove = false;
 
 /**
@@ -60,6 +61,11 @@ public class Sprite {
     this.frameDelay = this.spriteImage.getFrameDelay();
     this.transform = this.createTransform(x, y, theta);
     this.timeCreated = System.currentTimeMillis();
+    if (spriteImage.lifetimeInMilliseconds > 0) {
+      this.timeToDie = this.timeCreated + spriteImage.lifetimeInMilliseconds;
+    } else {
+      this.timeToDie = 0;
+    }
     this.isAnimation = this.spriteImage.xImageFrames * this.spriteImage.yImageFrames > 1;
     this.hasCollisions = spriteImage.hasCollisions;
     if (this.hasCollisions) {
@@ -189,8 +195,11 @@ public class Sprite {
    * updates the position and attitude
    * Not used if unmoving
    */
-  public void update() {
+  public void update(long timeNow) {
 
+    if (this.timeToDie > 0 && timeNow > this.timeToDie) {
+      this.toRemove = true;
+    }
     if (this.pointsCollisions != null) {
       this.pointsCollisionsInGame = this.transformPoints(this.pointsCollisions);
       this.rectBoundsInGame = this.boundingRectangle(this.pointsCollisionsInGame);  
@@ -200,7 +209,7 @@ public class Sprite {
   /**
    * Called during the Collision Detection phase 
    */
-  public void collisionDetect() {
+  public void collisionDetect(long timeNow) {
     
   }
   /**
