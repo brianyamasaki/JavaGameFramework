@@ -4,10 +4,11 @@ import com.yamasaki.AppState;
 import com.yamasaki.sound.GameSounds;
 import com.yamasaki.scene.Game;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class Ship2 extends Sprite {
-  private final double speedMax = 4.0;
+  // private final double speedMax = 4.0;
   private long lastShot = 0;
   private final long shotDelay = 500;
   GameSounds gameSounds = new GameSounds();
@@ -69,8 +70,16 @@ public class Ship2 extends Sprite {
   private void changeSpeed(double speed) {
     double dxChange = Math.sin(this.theta) * speed;
     double dyChange = Math.cos(this.theta) * speed;
-    this.dx = Math.max(Math.min(speedMax, this.dx + dxChange), -speedMax);
-    this.dy = Math.max(Math.min(speedMax, this.dy + dyChange), -speedMax);
+    this.dx = this.dx + dxChange;
+    this.dy = this.dy + dyChange;
+    // System.out.println(String.format("change (%.4f, %.4f) final(%.4f, %.4f)", dxChange, dyChange, this.dx, this.dy));
+  }
+  
+  private Point shootFromFront() {
+    int halfHeight = this.spriteImage.height / 2 + 5;
+    int x = this.x + (int) Math.round(Math.sin(this.theta) * halfHeight);
+    int y = this.y - (int) Math.round(Math.cos(this.theta) * halfHeight);
+    return new Point(x, y);
   }
 
   private void changeAngle(double theta) {
@@ -96,7 +105,8 @@ public class Ship2 extends Sprite {
   public void fire() {
     long time = System.currentTimeMillis();
     if(time-this.lastShot>=shotDelay){
-      AppState.addDynamicSprite(new Projectile(this.x, this.y, this.theta));
+      Point startPoint = this.shootFromFront();
+      AppState.addDynamicSprite(new Projectile(startPoint.x, startPoint.y, this.theta));
       lastShot = time;
       gameSounds.playLaser2Sounds();
     } 

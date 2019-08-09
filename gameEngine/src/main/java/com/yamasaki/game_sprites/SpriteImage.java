@@ -21,7 +21,7 @@ public class SpriteImage {
   protected boolean hasCollisions;
   protected ArrayList<Point> pointsCollisions;
   protected Rectangle rectCollisions;
-  protected int[] collidesWith;
+  protected boolean[] collidesWith;
 
   public SpriteImage(String filename) {
     this.filename = filename;

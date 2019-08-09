@@ -99,7 +99,7 @@ public class Game extends Scene {
     // add new Sprites
     if (this.addedDynamicSprites.size() > 0) {
       this.dynamicSprites.addAll(this.addedDynamicSprites);
-      this.addedDynamicSprites = new ArrayList<Sprite>();  
+      this.addedDynamicSprites.removeIf((sprite) -> true);  
     }
 
     // remove if marked for removal

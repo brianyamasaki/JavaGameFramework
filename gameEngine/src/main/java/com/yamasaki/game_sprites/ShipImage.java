@@ -31,9 +31,9 @@ public class ShipImage extends SpriteImage {
 
     this.rectCollisions = new Rectangle(0, 0, this.width, this.height);
     //  ship collides with static and dynamic objects
-    this.collidesWith = new int[2];
-    this.collidesWith[0] = 0;
-    this.collidesWith[1] = 1;
+    this.collidesWith = new boolean[2];
+    this.collidesWith[0] = true;
+    this.collidesWith[1] = true;
   }
 
 }

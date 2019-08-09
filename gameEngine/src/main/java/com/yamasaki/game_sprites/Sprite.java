@@ -24,7 +24,7 @@ public class Sprite {
   protected boolean isAnimation = false;
   protected boolean hasCollisions = false;
   protected ArrayList<Point> pointsCollisions;
-  protected int[] collidesWith;
+  protected boolean[] collidesWith;
   protected ArrayList<Point> pointsCollisionsInGame;
   protected Rectangle rectBoundsInGame;
   protected long timeToDie;

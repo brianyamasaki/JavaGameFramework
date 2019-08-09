@@ -29,6 +29,8 @@ public class VerticalWallImage extends SpriteImage {
 
     this.rectCollisions = new Rectangle(0, 0, width, height);
     // static objects don't check for any collisions, but must maintain physics
-    this.collidesWith = new int[0];
+    this.collidesWith = new boolean[2];
+    this.collidesWith[0] = false;
+    this.collidesWith[1] = false;
   }
 }
